@@ -32,7 +32,7 @@ function start() {
 
 
         }
-        
+
         welcomeID();
 
     });
@@ -88,34 +88,27 @@ function idQuantity() {
                     }
                 }
                 var chosenItem;
-                console.log("\n You want to buy " + answer.choice + 
-                    "\n'Cause you mad stingy, you want " + answer.quantity + answer.choice + "s");
-                 // determine if quantity is too high and over stock quantity
-        if (chosenItem.product_quantity <= parseInt(answer.quantity)) {
-            // quantity was low enough, so update db, let the user know, and start over
-            connection.query(
-              "UPDATE products SET ? WHERE ?",
-              [
-                {
-                  product_quantity: answer.quantity
-                },
-                {
-                  id: chosenItem.item_id
+                
+
+                console.log("\n You want to buy " + answer.choice +
+                    "\n'Cause you mad stingy, you want " + answer.quantity + " " + answer.choice + "s");
+                // determine if quantity is too high and over stock quantity
+                if (chosenItem.stock_quantity > parseInt(answer.quantity)) {
+                    // quantity was low enough, so update db, let the user know, and start over
+
+
+                    // if (error) throw err;
+                    console.log("YOU ARE IN LUCK, WE HAVE JUST THE RIGHT AMOUNT, but keep shopping tho");
+                    start();
+
+
                 }
-              ],
-              function(error) {
-                if (error) throw err;
-                console.log("Sorry my guy, pero like, we aint got it like that. Try again...");
-                start();
-              }
-            );
-          }
-          else {
-            // quantity was TOO much, so apologize and start over
-            console.log("YOU ARE IN LUCK, WE HAVE JUST THE RIGHT AMOUNT, but keep shopping tho");
-            start();
-          }
-        });
-       
+                else {
+                    // quantity was TOO much, so apologize and start over
+                    console.log("Sorry my guy, pero like, we aint got it like that. Try again...");
+                    start();
+                }
+            });
+
     });
-  }
+}
