@@ -28,9 +28,8 @@ function start() {
         if (err) throw err;
         console.log("\n---------- Bamazon Products ---------\n");
         for (var i = 0; i < res.length; i++) {
-            console.log(res[i].item_id + " | " + res[i].product_name + " | " + "$" + res[i].price + "\n");
-
-
+            console.log(res[i].item_id + " | " + res[i].product_name + " | " + "$" + res[i].price + " | " + 
+            "# in stock: " + res[i].stock_quantity )
         }
 
         welcomeID();
@@ -49,7 +48,7 @@ function welcomeID() {
             }
         )
         .then(function (answer) {
-            console.log(answer.welcome + ", " + "I hope you are ready to shop till you drop!\n");
+            console.log("\n" + answer.welcome + ", " + "I hope you are ready to shop till you drop!\n");
             idQuantity();
 
         });
@@ -90,25 +89,70 @@ function idQuantity() {
                 var chosenItem;
                 
 
-                console.log("\n You want to buy " + answer.choice +
-                    "\n'Cause you mad stingy, you want " + answer.quantity + " " + answer.choice + "s");
+                console.log(
+                    "\n'You chose " + answer.quantity + " " + answer.choice + "s" + "\n");
                 // determine if quantity is too high and over stock quantity
                 if (chosenItem.stock_quantity > parseInt(answer.quantity)) {
                     // quantity was low enough, so update db, let the user know, and start over
-
-
+                    var totalPrice = chosenItem.price * answer.quantity ;
+                    
                     // if (error) throw err;
-                    console.log("YOU ARE IN LUCK, WE HAVE JUST THE RIGHT AMOUNT, but keep shopping tho");
-                    start();
+                    console.log("YOU ARE IN LUCK, WE HAVE JUST THE RIGHT AMOUNT\n"
+                   + "\n Comes down to a total of " + "$" + totalPrice  +
+                    "\n if you would like to continue shopping please do!" 
+                 
+                    );
+
+                    productList();
+                    
 
 
                 }
                 else {
                     // quantity was TOO much, so apologize and start over
                     console.log("Sorry my guy, pero like, we aint got it like that. Try again...");
-                    start();
+                    productList();
+                    
                 }
             });
 
     });
+}
+
+function productList() {
+    inquirer
+    .prompt(
+        {
+            name: "checkout",
+            type: "confirm",
+            default: false,
+            message: "You can checkout whenever you want, would you like to continue shopping?"
+           
+        }
+    )
+    .then(function (answer) {
+        if (answer.checkout === true){
+            console.log(
+                "\n We want to thank and hope you had a wonderful time shopping at BAMAZON!" +
+            "Hope to see you soon!"
+            )
+           
+            
+
+        } else{
+            console.log("lets keep shopping!\n");
+            connection.query("SELECT * FROM products", function (err, res) {
+                if (err) throw err;
+                console.log("\n---------- Bamazon Products ---------\n");
+                for (var i = 0; i < res.length; i++) {
+                    console.log(res[i].item_id + " | " + res[i].product_name + " | " + "$" + res[i].price + " | " + 
+                    "# in stock: " + res[i].stock_quantity )
+                }
+                idQuantity();
+        
+            });
+        }
+
+    });
+   
 }
