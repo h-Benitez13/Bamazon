@@ -25,7 +25,7 @@ The Bamazon market receives user input using the inquirer npm packages. Install 
     c. Price of the product 
     d. Product quantity
 3. You will be asked for a name input and if you are ready to begin playing.
-intro right before continuing to shop)
+(intro right before continuing to shop)
 ![undefined convert-video-online com 2](https://user-images.githubusercontent.com/43594007/52538659-411d2a80-2d43-11e9-9516-52be1377d70e.gif)
 
 4. Once the user enters a name, the user name will be displayed and ask if ready to shop
