@@ -1,9 +1,10 @@
 # Bamazon
+The app is an Amazon-like storefront with MySQL; it will take in orders from customers and deplete stock from the store's inventory.
 
-#Getting Started
+## Getting Started
 To get started, follow these steps:
 
-##Clone the Repository
+## Clone the Repository
 Clone this project repository to your local directory on your computer and navigate to it by running the following commands:
 
 git clone git@github.com:h-Benitez13/Bamazon.git
