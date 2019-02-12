@@ -131,10 +131,10 @@ function productList() {
         }
     )
     .then(function (answer) {
-        if (answer.checkout === true){
+        if (answer.checkout === false){
             console.log(
                 "\n We want to thank and hope you had a wonderful time shopping at BAMAZON!" +
-            "Hope to see you soon!"
+            "\nHope to see you soon!"
             )
            
             
